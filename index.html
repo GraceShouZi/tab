@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>slidePage roeis</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/manual.css">
+    <link rel="stylesheet" href="css/mu.css">
+    <script type="text/javascript" src="js/resize.js"></script>
+</head>
+
+<body>
+    <div class="wx_box">
+        <div class="tab">
+        	<ul>
+            	<li class="tab_A">111</li>
+                <li>222</li>
+                <li>333</li>
+                <li>444</li>
+            </ul>
+        </div>
+        <div class="wrapper">
+            <div class="page" style="background: #EEE;">1</div>
+            <div class="page" style="background: #BBB;">2</div>
+            <div class="page" style="background: #0cF;">3</div>
+            <div class="page" style="background: #Fc0;">4</div>
+        </div>
+    </div>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/mu.latest.min.js"></script>
+    <script>	
+		 var page = new MuPage('.page', {
+            isLoop: true,
+			pageStart: 0,                               
+			mode: 'horizontal',
+            beforeSlide: function(idex) {
+                console.log('slide before');
+				console.log(page.index)
+				$('.tab li').eq(page.index).addClass("tab_A").siblings("li").removeClass("tab_A");
+            },
+            afterSlide: function(idex) {
+                console.log('slide after');
+				$('.tab li').eq(page.index).addClass("tab_A").siblings("li").removeClass("tab_A");
+            }
+        });
+        window.mu.util.preventScroll();
+        $('.page').on('swipeLeft', function(){
+            page.next();
+        }).on('swipeRight', function(){
+            page.prev();
+        });	
+		$(".tab li").click(function(){
+			var index = $(this).index();
+			$(this).addClass("tab_A").siblings("li").removeClass("tab_A");		
+			page.jump(index);
+		});
+		
+    </script>
+</body>
+
+</html>
